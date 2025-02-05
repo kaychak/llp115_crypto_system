@@ -7,10 +7,12 @@ from Crypto.Util.Padding import pad, unpad
 import binascii
 
 def generate_rsa_keypair():
-    # Generate 2048-bit RSA keys for Destination B
+    # Generate RSA keys for Destination B (already 2048-bit, which meets requirements)
     key = RSA.generate(2048)
     private_key = key
     public_key = key.publickey()
+    # Add display of public key in hex format
+    print(f"Destination B's Public Key (hex): {binascii.hexlify(public_key.export_key()).decode()}")
     return private_key, public_key
 
 def generate_aes_key(student_id):
@@ -74,8 +76,9 @@ def main():
     source.aes_key = generate_aes_key(student_id)
     source.set_message(message)
     
-    # Print original values
-    print(f"Original Message: {message}")
+    # Print original values (add message length)
+    print(f"\nOriginal Message: {message}")
+    print(f"Message length: {len(message.encode())} bytes")
     print(f"Original AES Key (hex): {binascii.hexlify(source.aes_key).decode()}")
     
     # Encrypt at Source A
