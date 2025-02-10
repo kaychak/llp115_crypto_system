@@ -1,4 +1,3 @@
-# Required libraries
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
@@ -9,7 +8,7 @@ import binascii
 from datetime import datetime
 
 def generate_rsa_keypair():
-    # Generate RSA keys for Destination B
+    # Generate RSA keypair for Destination B
     key = RSA.generate(2048)
     private_key = key #Full object is private key(contains both private and public key)
     public_key = key.publickey() #Public key is extracted from the full key object
@@ -76,9 +75,8 @@ def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = f"crypto_result_{timestamp}.txt"
     
-    # Open file for writing
     with open(output_file, "w") as f:
-        # Generate keys
+        # Generate key pair
         private_key, public_key = generate_rsa_keypair()
         f.write(f"Destination B's Public Key (hex): {binascii.hexlify(public_key.export_key()).decode()}\n")
         
@@ -105,7 +103,6 @@ def main():
         f.write(f"\nRecovered Message: {decrypted_message}\n")
         f.write(f"Recovered AES Key (hex): {binascii.hexlify(recovered_key).decode()}\n")
     
-    # Read and print the file contents to console
     with open(output_file, "r") as f:
         print(f.read())
 
